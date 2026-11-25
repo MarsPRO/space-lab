@@ -1,0 +1,23 @@
+# Dependencies and build output
+dist/
+node_modules/
+*.tgz
+*.tsbuildinfo
+
+# Cache
+.cache/
+.space-lab/
+
+# Local configuration and logs
+.env
+.env.*
+*.local
+*.log
+
+# Editors
+.idea/
+.vscode/
+
+# Operating system files
+.DS_Store
+Thumbs.db

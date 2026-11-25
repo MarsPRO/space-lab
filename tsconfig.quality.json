@@ -1,0 +1,20 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "noEmit": true,
+    "declaration": false,
+    "allowJs": true,
+    "checkJs": false,
+    "types": ["node", "vite/client"],
+    "paths": {
+      "space-lab": ["./src/index.ts"],
+      "space-lab/react": ["./src/react.ts"],
+      "space-lab/testing": ["./src/runtime/scenario.ts"],
+      "space-lab/config": ["./src/config.ts"],
+      "space-lab/renderers": ["./src/renderers.ts"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules", "dist", "**/*.generated.*", "**/__generated__/**"]
+}

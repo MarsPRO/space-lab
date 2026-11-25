@@ -1,0 +1,23 @@
+# Format only package sources, tools and configuration.
+*
+!*/
+!src/**/*.ts
+!src/**/*.tsx
+!src/**/*.css
+!/scripts/build.mjs
+!/scripts/check-support.mjs
+!/eslint.config.mjs
+!/prettier.config.mjs
+!/tsconfig.json
+!/tsconfig.quality.json
+**/node_modules/**
+**/dist/**
+**/.cache/**
+**/.space-lab/**
+**/fixtures/**
+**/__fixtures__/**
+**/__snapshots__/**
+**/*.generated.*
+**/__generated__/**
+**/baselines/**
+**/visual/**
