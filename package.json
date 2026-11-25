@@ -1,5 +1,5 @@
 {
-  "name": "space-lab",
+  "name": "@marspro/space-lab",
   "version": "1.0.0",
   "description": "Самостоятельный движок документации и интерактивных примеров Space Lab",
   "type": "module",
@@ -10,7 +10,7 @@
     "npm": ">=10"
   },
   "bin": {
-    "space-lab": "./dist/cli.js"
+    "space-lab": "dist/cli.js"
   },
   "exports": {
     ".": {
@@ -91,5 +91,13 @@
     "playwright": {
       "optional": true
     }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarsPRO/space-lab.git"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
   }
 }

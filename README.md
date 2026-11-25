@@ -7,7 +7,7 @@
 Node.js 22 (от 22.12), 24 или 26; npm 10+; React/React DOM 18.3.1 или 19.
 
 ```sh
-npm install -D space-lab
+npm install -D @marspro/space-lab
 ```
 
 ## Быстрый старт
@@ -15,7 +15,7 @@ npm install -D space-lab
 Создайте `space-lab.config.mjs` в своём проекте:
 
 ```js
-import { defineConfig } from 'space-lab';
+import { defineConfig } from '@marspro/space-lab';
 
 export default defineConfig({
   name: 'Мой проект',
