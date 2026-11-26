@@ -1,6 +1,6 @@
 {
   "name": "@marspro/space-lab",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Самостоятельный движок документации и интерактивных примеров Space Lab",
   "type": "module",
   "license": "MIT",
@@ -38,6 +38,7 @@
     "dist",
     "templates",
     "README.md",
+    "INSTALL.md",
     "CHANGELOG.md"
   ],
   "scripts": {
