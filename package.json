@@ -1,7 +1,7 @@
 {
   "name": "@marspro/space-lab",
-  "version": "1.0.2",
-  "description": "Самостоятельный движок документации и интерактивных примеров Space Lab",
+  "version": "1.1.0",
+  "description": "Движок для создания документации, каталогов компонентов и интерактивных примеров",
   "type": "module",
   "license": "MIT",
   "author": "Mars Stepanov",
@@ -44,6 +44,7 @@
   "scripts": {
     "dev": "node dist/cli.js dev",
     "build": "node scripts/build.mjs",
+    "test": "npm run build && node --test tests/cli-init.test.mjs tests/runtime.test.mjs tests/routes.test.mjs tests/i18n.test.mjs",
     "lint": "eslint . --max-warnings 0",
     "lint:fix": "eslint . --fix --max-warnings 0",
     "format": "prettier --write .",

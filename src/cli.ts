@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { pathToFileURL } from 'node:url';
 import { resolve } from 'node:path';
+import { copyFile, constants, lstat } from 'node:fs/promises';
 
 import { defineConfig } from './index.js';
 import type { SpaceLabConfig } from './index.js';
@@ -19,11 +20,32 @@ async function loadConfig(root: string) {
 
 const [command, ...args] = process.argv.slice(2);
 const help =
-  'Space Lab\n  space-lab dev [--port 6006]\n  space-lab build [--output-dir space-lab-static]\n  space-lab test [--locale <tag>] [--interactions] [--a11y] [--visual] [--update]\n  space-lab check-i18n [--json] [--strict]\n\nConfiguration: space-lab.config.mjs';
+  'Space Lab\n  space-lab init\n  space-lab dev [--port 6006]\n  space-lab build [--output-dir space-lab-static]\n  space-lab test [--locale <tag>] [--interactions] [--a11y] [--visual] [--update]\n  space-lab check-i18n [--json] [--strict]\n\nConfiguration: space-lab.config.mjs';
 try {
   if (command === '--version' || command === '-v') console.log(engineVersion);
   else if (!command || command === '--help') console.log(help);
-  else if (command === 'check-i18n') {
+  else if (command === 'init') {
+    if (args.length) throw new Error('Usage: space-lab init');
+    const target = resolve(process.cwd(), 'space-lab.config.mjs');
+    try {
+      await copyFile(
+        new URL('../templates/space-lab.config.mjs', import.meta.url),
+        target,
+        constants.COPYFILE_EXCL,
+      );
+      console.log(`Created ${target}`);
+      console.log('Next: configure space-lab.config.mjs for your project.');
+    } catch (error) {
+      if (
+        error instanceof Error &&
+        'code' in error &&
+        error.code === 'EEXIST' &&
+        (await lstat(target)).isFile()
+      )
+        console.log(`${target} already exists; left unchanged.`);
+      else throw error;
+    }
+  } else if (command === 'check-i18n') {
     if (
       args.some((flag) => !['--json', '--strict'].includes(flag)) ||
       new Set(args).size !== args.length
