@@ -20,6 +20,8 @@ import { useI18n, useLocale, useLabels, useText } from '../react.js';
 import { ControlInput, controlText } from './controls.js';
 import type { Text, ExtensionTool } from '../index.js';
 import { usePopover } from './popover.js';
+import { useThemePreference } from './theme.js';
+import { resolveTheme, themePreference } from '../runtime/theme.js';
 import './style.css';
 
 function isText(value: unknown): value is Text {
@@ -115,12 +117,10 @@ function App() {
     resolveDocument(entry, locale, i18n.registry),
   );
   const text = useText();
-  const theme =
-    state.get('theme') === 'dark'
-      ? 'dark'
-      : state.get('theme') === 'light'
-        ? 'light'
-        : (config.defaultTheme ?? 'light');
+  const { preference, setPreference, systemTheme } = useThemePreference(
+    config.defaultTheme ?? 'system',
+  );
+  const theme = resolveTheme(state.get('theme'), preference, systemTheme);
   const labels = useLabels();
   const home =
     resolveRoute(entries, config.home)?.id ??
@@ -187,7 +187,7 @@ function App() {
   const translate = (name: string, id: string) =>
     translateLabel(name, id, locale, config.labels, i18n.registry, labels);
   const update = (values: Record<string, string>, replace = false) => {
-    updateState({ page, locale, theme, ...values }, replace);
+    updateState({ page, locale, ...values }, replace);
   };
   const updateGlobals = (values: Record<string, unknown>) => {
     update({ globals: JSON.stringify({ ...globals, ...values }) }, true);
@@ -393,7 +393,6 @@ function App() {
     for (const [key, value] of Object.entries({
       page: id,
       locale,
-      theme,
       example: selectedExample,
     })) {
       if (value) params.set(key, value);
@@ -475,16 +474,29 @@ function App() {
               <div className="lab-settings">
                 <strong>{labels.settings}</strong>
                 <label>
-                  {labels.theme}
+                  {labels.appearanceTheme}
                   <select
-                    aria-label={labels.theme}
-                    value={theme}
+                    aria-label={labels.appearanceTheme}
+                    defaultValue="default"
+                  >
+                    <option value="default">
+                      {labels.defaultAppearanceTheme}
+                    </option>
+                  </select>
+                </label>
+                <label>
+                  {labels.defaultTheme}
+                  <select
+                    aria-label={labels.defaultTheme}
+                    value={preference}
                     onChange={(event) => {
-                      update({ theme: event.target.value });
+                      setPreference(themePreference(event.target.value));
+                      updateState({ theme: '' }, true);
                     }}
                   >
                     <option value="light">{labels.light}</option>
                     <option value="dark">{labels.dark}</option>
+                    <option value="system">{labels.systemTheme}</option>
                   </select>
                 </label>
                 <small>Space Lab {engineVersion}</small>
@@ -1093,13 +1105,16 @@ function App() {
               </label>
               <button
                 className="lab-theme-toggle"
+                role="switch"
+                aria-checked={theme === 'dark'}
                 aria-label={labels.theme}
-                title={labels.theme}
+                title={theme === 'dark' ? labels.light : labels.dark}
                 onClick={() => {
                   update({ theme: theme === 'dark' ? 'light' : 'dark' });
                 }}
               >
-                {theme === 'dark' ? labels.light : labels.dark}
+                <Icon name="sun" />
+                <Icon name="moon" />
               </button>
             </div>
           </header>

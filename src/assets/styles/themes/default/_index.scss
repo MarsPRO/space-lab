@@ -1,0 +1,75 @@
+$light: (
+  'color-scheme': light,
+  '--lab-accent-soft': #eeeafb,
+  '--lab-ink': #25283e,
+  '--lab-bg': #fff,
+  '--lab-code': #f4f5fa,
+  '--lab-side': #f7f8fc,
+  '--lab-muted': #626b7b,
+  '--lab-line': #e1e5f0,
+  '--lab-accent': #6855dd,
+  '--lab-grid-minor-color': rgba(90, 110, 135, 0.12),
+  '--lab-grid-major-color': rgba(90, 110, 135, 0.28),
+  '--lab-code-bg': #f4f5fa,
+  '--lab-code-ink': #25283e,
+  '--lab-code-muted': #626b7b,
+  '--lab-code-line': #e1e5f0,
+  '--lab-token-comment': #667085,
+  '--lab-token-keyword': #7533ba,
+  '--lab-token-string': #166534,
+  '--lab-token-number': #9a3412,
+  '--lab-token-function': #075cab,
+  '--lab-token-property': #a02240,
+  '--lab-token-punctuation': #596579,
+);
+
+$dark: (
+  'color-scheme': dark,
+  '--lab-accent-soft': #30294c,
+  '--lab-ink': #ececf6,
+  '--lab-bg': #181923,
+  '--lab-code': #232534,
+  '--lab-side': #22232f,
+  '--lab-muted': #a5a8bd,
+  '--lab-line': #393b4b,
+  '--lab-accent': #aa9aff,
+  '--lab-code-bg': #1e2230,
+  '--lab-code-ink': #e2e8f0,
+  '--lab-code-muted': #a5acbf,
+  '--lab-code-line': #3c4356,
+  '--lab-token-comment': #a5acbf,
+  '--lab-token-keyword': #d3a5ff,
+  '--lab-token-string': #a3d9a5,
+  '--lab-token-number': #f0ac7d,
+  '--lab-token-function': #8acbff,
+  '--lab-token-property': #ffacbc,
+  '--lab-token-punctuation': #b2b9cd,
+);
+
+$grid-dark: (
+  '--lab-grid-minor-color': rgba(187, 200, 224, 0.16),
+  '--lab-grid-major-color': rgba(187, 200, 224, 0.4),
+);
+
+@mixin tokens($values) {
+  @each $name, $value in $values {
+    #{$name}: #{$value};
+  }
+}
+
+:root:not([data-style-theme]),
+:root[data-style-theme='default'] {
+  @include tokens($light);
+  &[data-theme='dark'] {
+    @include tokens($dark);
+  }
+  &[data-surface='light'] {
+    @include tokens($light);
+  }
+  &[data-surface='dark'] {
+    @include tokens($dark);
+  }
+  &[data-grid-tone='dark'] {
+    @include tokens($grid-dark);
+  }
+}

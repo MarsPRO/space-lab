@@ -1,6 +1,6 @@
 {
   "name": "@marspro/space-lab",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Движок для создания документации, каталогов компонентов и интерактивных примеров",
   "type": "module",
   "license": "MIT",
@@ -44,7 +44,8 @@
   "scripts": {
     "dev": "node dist/cli.js dev",
     "build": "node scripts/build.mjs",
-    "test": "npm run build && node --test tests/cli-init.test.mjs tests/runtime.test.mjs tests/routes.test.mjs tests/i18n.test.mjs",
+    "test": "npm run build && node --test tests/cli-init.test.mjs tests/runtime.test.mjs tests/routes.test.mjs tests/i18n.test.mjs tests/theme.test.mjs",
+    "test:theme": "npm run build && node --test tests/browser/theme-settings.test.mjs",
     "lint": "eslint . --max-warnings 0",
     "lint:fix": "eslint . --fix --max-warnings 0",
     "format": "prettier --write .",
@@ -88,6 +89,7 @@
     "prettier": "3.10.1",
     "react": "19.3.1",
     "react-dom": "19.3.1",
+    "sass": "1.108.2",
     "typescript-eslint": "8.73.0"
   },
   "peerDependenciesMeta": {

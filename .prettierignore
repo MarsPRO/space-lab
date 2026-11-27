@@ -4,6 +4,7 @@
 !src/**/*.ts
 !src/**/*.tsx
 !src/**/*.css
+!src/**/*.scss
 !/scripts/build.mjs
 !/scripts/check-support.mjs
 !/eslint.config.mjs

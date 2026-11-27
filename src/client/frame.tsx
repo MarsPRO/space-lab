@@ -6,6 +6,8 @@ import { mountLocalized, prepareDocumentLocale } from './i18n.js';
 import type { Translator } from '../i18n/translator.js';
 import { config, entries, development } from 'virtual:space-lab/site';
 import { MarkdownPre } from './code.js';
+import { useThemePreference } from './theme.js';
+import { resolveTheme } from '../runtime/theme.js';
 import { loaders, preview } from 'virtual:space-lab/content';
 import {
   useI18n,
@@ -49,12 +51,10 @@ function Frame() {
   const documentVersion = entry
     ? resolveDocument(entry, locale, i18n.registry)
     : undefined;
-  const theme =
-    state.get('theme') === 'dark'
-      ? 'dark'
-      : state.get('theme') === 'light'
-        ? 'light'
-        : (config.defaultTheme ?? 'light');
+  const { preference, systemTheme } = useThemePreference(
+    config.defaultTheme ?? 'system',
+  );
+  const theme = resolveTheme(state.get('theme'), preference, systemTheme);
   const labels = useLabels();
   const example = state.get('example') ?? '';
   const standalone = entry?.kind === 'examples' && !!example;

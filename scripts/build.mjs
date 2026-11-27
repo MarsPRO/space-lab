@@ -1,7 +1,8 @@
-import { rm, mkdir, copyFile } from 'node:fs/promises';
+import { rm, mkdir, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
+import { compile } from 'sass';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const output = resolve(root, 'dist');
@@ -19,7 +20,8 @@ const result = spawnSync(
 );
 if (result.status !== 0) process.exit(result.status ?? 1);
 await mkdir(resolve(output, 'client'), { recursive: true });
-await copyFile(
-  resolve(root, 'src/client/style.css'),
-  resolve(output, 'client/style.css'),
-);
+const stylesheet = compile(resolve(root, 'src/assets/styles/index.scss'), {
+  style: 'expanded',
+  charset: false,
+});
+await writeFile(resolve(output, 'client/style.css'), stylesheet.css);

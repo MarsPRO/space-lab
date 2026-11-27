@@ -47,6 +47,7 @@ export type { Locale, LocalizedText, NavigationLabels } from './i18n/locale.js';
 
 export type Text = string | LocalizedText;
 export type Theme = 'light' | 'dark';
+export type ThemePreference = Theme | 'system';
 export interface GridOptions {
   step?: number;
   majorEvery?: number;
@@ -66,7 +67,7 @@ export interface SpaceLabConfig {
   preview?: string;
   defaultLocale?: Locale;
   i18n?: I18nConfig;
-  defaultTheme?: Theme;
+  defaultTheme?: ThemePreference;
   labels?: NavigationLabels;
   sectionOrder?: string[];
   home?: string;
@@ -170,9 +171,9 @@ export function defineConfig<const Config extends SpaceLabConfig>(
   createLocaleRegistry(config.i18n, config.defaultLocale);
   if (
     config.defaultTheme !== undefined &&
-    !['light', 'dark'].includes(config.defaultTheme)
+    !['light', 'dark', 'system'].includes(config.defaultTheme)
   ) {
-    throw new Error('Space Lab: defaultTheme must be light or dark.');
+    throw new Error('Space Lab: defaultTheme must be light, dark or system.');
   }
   if (
     config.base !== undefined &&

@@ -155,7 +155,8 @@ async function captureChecked(
       'Space Lab: install playwright in this project to run browser checks.',
     );
   }
-  const theme = options.theme ?? config.defaultTheme ?? 'light';
+  const configuredTheme = config.defaultTheme === 'dark' ? 'dark' : 'light';
+  const theme = options.theme ?? configuredTheme;
   const width = Math.max(240, Math.min(4000, Number(options.width) || 1280)),
     height = Math.max(240, Math.min(4000, Number(options.height) || 800));
   const key = createHash('sha256')

@@ -1,0 +1,80 @@
+@use 'config';
+
+pre.lab-code,
+#lab-panel-code {
+  --lab-code: var(--lab-code-bg);
+  --lab-ink: var(--lab-code-ink);
+  --lab-muted: var(--lab-code-muted);
+  --lab-line: var(--lab-code-line);
+  color: var(--lab-ink);
+  background: var(--lab-code);
+}
+pre.lab-code {
+  margin: 16px 0;
+  padding: 18px 20px;
+  border: 1px solid var(--lab-line);
+  border-radius: 9px;
+  overflow: auto;
+  font: #{config.$code-font-size}/#{config.$code-line-height}
+    config.$code-font-family;
+  tab-size: 2;
+}
+#lab-panel-code > .lab-code {
+  margin: 0;
+  min-height: 100%;
+  border: 0;
+  border-radius: 0;
+}
+.lab-code .token:is(.comment, .prolog, .doctype, .cdata) {
+  color: var(--lab-token-comment);
+}
+.lab-code .token:is(.keyword, .atrule, .important) {
+  color: var(--lab-token-keyword);
+}
+.lab-code .token:is(.string, .char, .attr-value, .regex, .inserted) {
+  color: var(--lab-token-string);
+}
+.lab-code .token:is(.number, .boolean, .constant) {
+  color: var(--lab-token-number);
+}
+.lab-code .token:is(.function, .class-name, .builtin) {
+  color: var(--lab-token-function);
+}
+.lab-code .token:is(.property, .tag, .selector, .deleted) {
+  color: var(--lab-token-property);
+}
+.lab-code .token:is(.punctuation, .operator, .entity) {
+  color: var(--lab-token-punctuation);
+}
+.lab-code .token.attr-name {
+  color: var(--lab-token-function);
+}
+
+/* The gutter is outside code; generated labels cannot enter copied source. */
+.lab-code[data-line-numbers='true'] {
+  display: grid;
+  grid-template-columns: max-content minmax(max-content, 1fr);
+  align-items: start;
+}
+.lab-code > .lab-code-source {
+  display: block;
+  font: inherit;
+  line-height: inherit;
+  white-space: pre;
+}
+.lab-code-gutter {
+  position: sticky;
+  left: 0;
+  display: block;
+  min-width: 2ch;
+  margin-right: 14px;
+  padding-right: 12px;
+  border-right: 1px solid var(--lab-line);
+  color: var(--lab-muted);
+  background: var(--lab-code);
+  text-align: right;
+  font: inherit;
+  line-height: inherit;
+  user-select: none;
+  pointer-events: none;
+}

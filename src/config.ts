@@ -357,6 +357,7 @@ export async function createSite(
         '@testing-library/dom',
         '@testing-library/user-event',
         'axe-core',
+        'react-syntax-highlighter/dist/cjs/prism-light.js',
       ],
     },
     oxc: { jsx: { runtime: 'automatic' } },
